@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>ПРОВЕРИТЬ НОМЕР</h2>
+
+        <form method="POST" action="{{ url_for('phone') }}">
+            <div class="mb-3">
+                <label for="number" class="form-label">Номер телефона:</label>
+                <input type="text" 
+                       class="form-control {% if error %}is-invalid{% endif %}" 
+                       id="number" 
+                       name="number" 
+                       value="{{ user_data }}"
+                       placeholder="+7 (123) 456-75-90">
+                
+                {% if error %}
+                    <div class="invalid-feedback">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                
+                <div class="form-text">
+                    <small>
+                        Допустимые форматы:<br>
+                        +7 (123) 456-75-90<br>
+                        8(123)4567590<br>
+                        123.456.75.90
+                    </small>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Проверить</button>
+        </form>
+    </div>
+    
+    <div class="col-md-6">
+        <h2>РЕЗУЛЬТАТ</h2>
+        
+        {% if result %}
+            <div class="alert alert-success">
+                <h5 class="alert-heading">Номер принят</h5>
+                <p class="mb-0">Отформатированный номер: <strong>{{ result }}</strong></p>
+            </div>
+        {% elif error %}
+            <div class="alert alert-danger">
+                <h5 class="alert-heading">Ошибка</h5>
+                <p class="mb-0">{{ error }}</p>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Введенные данные:</h5>
+                    <p class="card-text">{{ user_data }}</p>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <p class="mb-0">Данные еще не предоставлены. Заполните форму слева.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
