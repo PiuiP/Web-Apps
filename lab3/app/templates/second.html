@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="text-center">Вход в систему</h4>
+                                </div>
+                                <div class="card-body">
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                        {% if messages %}
+                                            {% for category, message in messages %}
+                                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                                    {{ message }}
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
+                                    <form method="POST">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Логин</label>
+                                            <input type="text" class="form-control {% if error %}is-invalid{% endif %}" id="username" name="username"  required>
+                                            {% if error %}
+                                                <div class="invalid-feedback"></div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Пароль</label>
+                                            <input type="password" class="form-control {% if error %}is-invalid{% endif %}" id="password" name="password" required>
+                                            {% if error %}
+                                                <div class="invalid-feedback">
+                                                    {{ error }} Пароль принадлежит user1@gmail.com
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                            <label class="form-check-label" for="remember">Запомнить меня</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                                    </form>
+
+{% endblock %}
